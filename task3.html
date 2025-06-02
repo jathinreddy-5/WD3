@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 - Quiz + API + Responsive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: white;
+      color: black;
+    }
+
+    header {
+      background-color: orange;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .quiz-section, .api-section {
+      background-color: #f9f9f9;
+      border: 2px solid orange;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-weight: bold;
+    }
+
+    .option {
+      display: block;
+      margin: 8px 0;
+    }
+
+    .btn {
+      background-color: black;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: orange;
+      color: black;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Task 3 - Quiz & API Data Fetch</h1>
+    <p>HTML • CSS • JavaScript</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Quiz Section -->
+    <div class="quiz-section">
+      <h2>Quick JavaScript Quiz</h2>
+      <p class="question" id="question">What does DOM stand for?</p>
+      <label class="option"><input type="radio" name="q1" value="a" /> Document Object Model</label>
+      <label class="option"><input type="radio" name="q1" value="b" /> Data Object Method</label>
+      <label class="option"><input type="radio" name="q1" value="c" /> Digital Output Memory</label>
+      <label class="option"><input type="radio" name="q1" value="d" /> Display of Modules</label>
+      <button class="btn" onclick="checkAnswer()">Submit Answer</button>
+      <p id="quiz-result"></p>
+    </div>
+
+    <!-- API Section -->
+    <div class="api-section">
+      <h2>Need a Break? Here's a Random Joke!</h2>
+      <button class="btn" onclick="fetchJoke()">Get Joke</button>
+      <p id="joke-area" style="margin-top: 15px;"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 ApexPlanet Internship Task 3 by [Your Name]</p>
+  </footer>
+
+  <script>
+    function checkAnswer() {
+      const options = document.getElementsByName("q1");
+      let selected = '';
+      for (const opt of options) {
+        if (opt.checked) {
+          selected = opt.value;
+          break;
+        }
+      }
+
+      const result = document.getElementById("quiz-result");
+
+      if (selected === "a") {
+        result.textContent = "✅ Correct! DOM stands for Document Object Model.";
+        result.style.color = "green";
+      } else if (selected === "") {
+        result.textContent = "⚠️ Please select an answer.";
+        result.style.color = "orange";
+      } else {
+        result.textContent = "❌ Incorrect. Try again!";
+        result.style.color = "red";
+      }
+    }
+
+    function fetchJoke() {
+      const jokeArea = document.getElementById("joke-area");
+      jokeArea.textContent = "Loading joke...";
+      fetch('https://official-joke-api.appspot.com/random_joke')
+        .then(res => res.json())
+        .then(data => {
+          jokeArea.textContent = `${data.setup} 😂\n${data.punchline}`;
+        })
+        .catch(() => {
+          jokeArea.textContent = "Something went wrong. Try again later.";
+        });
+    }
+  </script>
+</body>
+</html>
